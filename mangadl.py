@@ -2,18 +2,12 @@ from bs4 import BeautifulSoup
 from PIL import Image
 
 import numpy as np
-
 import requests
 import urllib.parse
 import os
 import glob
-import re
-import shutil
-import stat
 import errno
-import time
 
-from requests.api import request
 
 def search_manga(title):
     base_url = 'http://mangadex.link/'
@@ -123,6 +117,8 @@ def find_chapters(link):
     print('Type \'ALL\' to download all chapters')
     print()
     user_input = input('What chapters should I download for you?: ')
+    print()
+    print('------------------------------------------------------------')
 
     if(user_input.upper() == 'ALL'):
         return chapter_list
@@ -175,21 +171,28 @@ def download_chapter(chapters, dir, title):
         headers = {
             'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36 Edg/91.0.864.41'
             }
-
-        print('... Beginning to download chapter {}'.format(chapters[i]['chapter']))
-        print()
-
-        r = requests.get(chapters[i]['link'])
-        #print(r)
         
-        soup = BeautifulSoup(r.content, 'html5lib')
+        a = chapters[i]['link']
+        b = urllib.request.urlopen(a).geturl()
+        r = requests.get(b)
 
-        div = soup.find('div', attrs={'class':'container-chap'})
-        images = div.p.text
-        images = images.split(',')
-        #print (images)
+        if('mangadex.link' in b):
+            soup = BeautifulSoup(r.content, 'html5lib')
+            div = soup.find('div', attrs={'class':'container-chap'})
+            images = div.p.text
+            images = images.split(',')
+            
+        elif('manganelos' in b):
+            soup = BeautifulSoup(r.content, 'html5lib')
+            div = soup.find('div', attrs={'class':'col-md-12 paddfixboth-mobile'})
+            images = div.p.text
+            images = images.split(',')
+            
+        else:
+            print('no support for this website')
 
-        
+        print('... downloading chapter {}'.format(chapters[i]['chapter']))
+       
         if (len(images) == 0):
             print('Chapter {} is empty'.format(str(chapters[i]['chapter'])))
             print('------------------------------------------------------------')
@@ -219,6 +222,32 @@ def download_chapter(chapters, dir, title):
             file.write(res.content)
             file.close()
 
+        
+        im_paths = []
+        
+        for file in sorted(glob.glob(image_folder_path + '/*' + f_ext), key=os.path.getmtime):
+
+            try:
+                im = Image.open(file)
+                im.convert('RGB')
+                im_paths.append(im)
+            except:
+                print('Images did not load properly from site')
+                continue
+
+        try:
+            im1 = im_paths[0]
+            im_paths.pop(0)
+
+            chapter_num = chapters[i]['chapter']
+            pdf = os.path.join(image_folder_path, 'Chapter {}.pdf'.format(chapter_num))
+            im1.save(pdf, save_all=True, append_images=im_paths)
+
+        except:
+            continue
+
+
+        print('Done!')
 
 
 def main():

@@ -1,13 +1,7 @@
 ## About
 
-A simple code that allows you to download and store mangas from [mangakakalot](https://ww5.mangakakalot.tv/). This allows you to search for your manga, select wich chapters you want to donwload and stores the images on a folder like 'manga-name/chapter n/'.
-
-
-## About
-
-This is just a simple discord program made entirely in python that allows the download of manga chapters from [mangakakalot](https://ww5.mangakakalot.tv/).
-
-Everything was made with the intention of learning more about python in a fun and interactive way.
+This is just a simple program made entirely in python that allows the download of manga chapters from [mangakakalot](https://ww5.mangakakalot.tv/).
+Everything was made with the intention of learning more about python in a fun and interactive way and has no profiting meanings.
 
 
 ## How to start

@@ -8,9 +8,9 @@ I do not own mangakakalot.tv or any of its contents.
 ## How to start
 
 To get the program to work you should download the source code and follow the next steps:
-  1. Clone the repository
-  2. Install the requirements
-  3. Run the code and enjoy :)
+  1. Donwload the executable
+  2. Move to the folder you wish to download the files to
+  3. Run the program and enjoy :)
 
 
 ## How to use

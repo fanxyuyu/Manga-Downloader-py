@@ -1,7 +1,8 @@
 ## About
 
-This is just a simple program made entirely in python that allows the download of manga chapters from [mangakakalot](https://ww5.mangakakalot.tv/).
-Everything was made with the intention of learning more about python in a fun and interactive way and has no profiting meanings.
+This is just a simple program made entirely in python that allows the download of manga chapters from [mangakakalot](https://ww5.mangakakalot.tv/). Everything was made with the intention of learning more about python in a fun and interactive way!
+
+**Disclaimer**
 
 
 ## How to start
